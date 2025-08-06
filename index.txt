@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartu Ucapan Alunaaa </title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffd6e0, #ffe8f0);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    #heart {
+      font-size: 5rem;
+      animation: float 2s ease-in-out infinite;
+      opacity: 1;
+      transition: opacity 1s ease;
+      z-index: 1;
+    }
+    #tap {
+      position: absolute;
+      bottom: 60px;
+      font-size: 1.5rem;
+      animation: blink 1.5s infinite;
+      color: #666;
+      opacity: 1;
+      z-index: 1;
+    }
+    .lopyu {
+      position: absolute;
+      font-size: 2rem;
+      color: #ff69b4;
+      opacity: 0;
+      transform: scale(0);
+      pointer-events: none;
+      animation: pop-fade 1s forwards;
+      font-weight: 600;
+    }
+    #message {
+      font-size: 1.2rem;
+      max-width: 80%;
+      color: #333;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+      position: absolute;
+      top: 35%;
+      font-weight: 500;
+      z-index: 2;
+    }
+    .heart-fall {
+      position: absolute;
+      top: -30px;
+      font-size: 1.2rem;
+      opacity: 0.8;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pop-fade {
+      0% {
+        opacity: 1;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.2);
+      }
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="heart">💌</div>
+  <div id="tap">tap tap</div>
+  <div id="message">
+    lunaaa sayanggg🤍
+  </div><audio id="bgm" src="musikmu.mp3"></audio>
+
+  <script>
+    const heart = document.getElementById('heart');
+    const tap = document.getElementById('tap');
+    const message = document.getElementById('message');
+    const audio = document.getElementById('bgm');
+
+    window.onload = () => {
+      heart.style.opacity = 1;
+      tap.style.opacity = 1;
+    }
+
+    document.body.addEventListener('click', (e) => {
+      // Buat efek lopyu di lokasi tap
+      const lopyu = document.createElement('div');
+      lopyu.className = 'lopyu';
+      lopyu.style.left = `${e.clientX - 30}px`;
+      lopyu.style.top = `${e.clientY - 20}px`;
+      lopyu.textContent = 'lopyuuuuuu';
+      document.body.appendChild(lopyu);
+
+      setTimeout(() => {
+        lopyu.remove();
+      }, 1000);
+
+      // Sembunyikan elemen awal & tampilkan pesan
+      heart.style.opacity = 0;
+      tap.style.display = 'none';
+
+      setTimeout(() => {
+        message.style.opacity = 1;
+        audio.play();
+        startHeartRain();
+      }, 600);
+    });
+
+    function startHeartRain() {
+      const symbols = ['💗', '💞', '💐 🌸 💞'];
+      const interval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart-fall';
+        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 200);
+
+      // Stop after 10 seconds
+      setTimeout(() => clearInterval(interval), 10000);
+    }
+  </script></body>
+</html>
